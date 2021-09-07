@@ -5,15 +5,15 @@ require-module fzf
 set-option global fzf_highlight_command 'bat'
 
 define-command -override focuozz-files %{
-    fzf -preview -kak-cmd %{focuozz} -items-cmd 'find -L . -type f'
+    fzf -preview -kak-cmd %{focuozz-buffile} -items-cmd 'find -L . -type f'
 }
 
 define-command -override focuozz-git %{
-    fzf -preview -kak-cmd %{focuozz} -items-cmd 'git ls-files'
+    fzf -preview -kak-cmd %{focuozz-buffile} -items-cmd 'git ls-files'
 }
 
 define-command -override focuozz-rg %{
-    fzf -kak-cmd %{evaluate-commands} -items-cmd "rg --line-number --no-column --no-heading --color=never '' 2>/dev/null" -filter %{sed -E 's/([^:]+):([^:]+):.*/focuozz \1; execute-keys \2gvc/'}
+    fzf -kak-cmd %{evaluate-commands} -items-cmd "rg --line-number --no-column --no-heading --color=never '' 2>/dev/null" -filter %{sed -E 's/([^:]+):([^:]+):.*/focuozz-buffile \1; execute-keys \2gvc/'}
 }
 
 declare-user-mode focuozz-mode
